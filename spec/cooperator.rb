@@ -20,8 +20,8 @@ spec '.perform runs the defined action' do
   assert $performed
 end
 
-spec '.perform accepts a context' do
-  Action.perform name: 'Apple'
+spec '.perform accepts and returns a context' do
+  context = Action.perform name: 'Apple'
 
-  assert $performed
+  assert context.name, :==, 'Apple'
 end

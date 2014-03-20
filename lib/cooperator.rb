@@ -5,7 +5,9 @@ require 'hashie'
 module Cooperator
   module ClassMethods
     def perform(context = nil)
-      new(context).perform
+      action = new context
+      action.perform
+      action.context
     end
   end
 
@@ -14,7 +16,11 @@ module Cooperator
   end
 
   def initialize(context = Hashie::Mash.new)
-    @_context = context
+    @_context = if context.is_a? Hashie::Mash
+                  context
+                else
+                  Hashie::Mash.new context
+                end
   end
 
   def self.prepended(base)
