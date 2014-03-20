@@ -3,6 +3,9 @@ require "cooperator/version"
 require 'hashie'
 
 module Cooperator
+  class Context < Hashie::Mash
+  end
+
   module ClassMethods
     def perform(context = nil)
       action = new context
@@ -15,11 +18,11 @@ module Cooperator
     @_context
   end
 
-  def initialize(context = Hashie::Mash.new)
-    @_context = if context.is_a? Hashie::Mash
+  def initialize(context = Context.new)
+    @_context = if context.is_a? Context
                   context
                 else
-                  Hashie::Mash.new context
+                  Context.new context
                 end
   end
 
