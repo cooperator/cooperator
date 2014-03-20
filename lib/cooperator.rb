@@ -1,5 +1,13 @@
 require "cooperator/version"
 
 module Cooperator
-  # Your code goes here...
+  module ClassMethods
+    def perform
+      new.perform
+    end
+  end
+
+  def self.prepended(base)
+    base.extend ClassMethods
+  end
 end
