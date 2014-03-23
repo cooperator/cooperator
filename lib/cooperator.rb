@@ -24,7 +24,11 @@ module Cooperator
   module ClassMethods
     def perform(context = nil)
       action = new context
-      action.perform
+
+      catch :finish do
+        action.perform
+      end
+
       action.context
     end
   end
@@ -43,5 +47,11 @@ module Cooperator
 
   def self.prepended(base)
     base.extend ClassMethods
+  end
+
+  private
+
+  def success!
+    throw :finish
   end
 end
