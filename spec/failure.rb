@@ -1,6 +1,6 @@
 require 'cooperator'
 
-class Action
+class Failure
   prepend Cooperator
 
   def perform
@@ -18,14 +18,14 @@ end
 subject Cooperator
 
 spec '.perform runs until #failure! is called' do
-  Action.perform
+  Failure.perform
 
   assert $before
   refute $after
 end
 
 spec '.perform returns a failure context' do
-  context = Action.perform
+  context = Failure.perform
 
   assert context, :failure?
   refute context, :success?
