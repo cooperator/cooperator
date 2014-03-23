@@ -27,6 +27,12 @@ module Cooperator
                 end
   end
 
+  def cooperate(*actions)
+    actions.each do |action|
+      action.perform context
+    end
+  end
+
   def self.prepended(base)
     base.extend ClassMethods
   end
