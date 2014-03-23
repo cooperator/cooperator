@@ -55,4 +55,8 @@ module Cooperator
     context.success!
     throw :finish
   end
+
+  def failure!
+    throw :finish
+  end
 end
