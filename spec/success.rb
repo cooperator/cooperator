@@ -1,6 +1,6 @@
 require 'cooperator'
 
-class Action
+class ExplicitSuccess
   prepend Cooperator
 
   def perform
@@ -17,16 +17,18 @@ end
 
 subject Cooperator
 
-spec '.perform runs until #success! is called' do
-  Action.perform
+scope 'explicit success' do
+  spec '.perform runs until #success! is called' do
+    ExplicitSuccess.perform
 
-  assert $before
-  refute $after
-end
+    assert $before
+    refute $after
+  end
 
-spec '.perform returns a success context' do
-  context = Action.perform
+  spec '.perform returns a success context' do
+    context = ExplicitSuccess.perform
 
-  assert context, :success?
-  refute context, :failure?
+    assert context, :success?
+    refute context, :failure?
+  end
 end
