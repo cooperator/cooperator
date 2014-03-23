@@ -53,6 +53,8 @@ class Failure
   end
 end
 
+subject Cooperator
+
 scope 'no failure' do
   spec '#cooperate performs the given actions' do
     context = Success.perform
