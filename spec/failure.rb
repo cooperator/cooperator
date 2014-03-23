@@ -23,3 +23,10 @@ spec '.perform runs until #failure! is called' do
   assert $before
   refute $after
 end
+
+spec '.perform returns a failure context' do
+  context = Action.perform
+
+  assert context, :failure?
+  refute context, :success?
+end
