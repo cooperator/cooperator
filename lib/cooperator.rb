@@ -4,6 +4,17 @@ require 'hashie'
 
 module Cooperator
   class Context < Hashie::Mash
+    def success!
+      self._failure = false
+    end
+
+    def success?
+      not failure?
+    end
+
+    def failure?
+      _failure
+    end
   end
 
   module ClassMethods
