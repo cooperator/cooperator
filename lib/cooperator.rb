@@ -30,6 +30,8 @@ module Cooperator
   def cooperate(*actions)
     actions.each do |action|
       action.perform context
+
+      break if context.failure?
     end
   end
 

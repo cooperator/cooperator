@@ -16,12 +16,40 @@ class Second
   end
 end
 
+class Third
+  prepend Cooperator
+
+  def perform
+    context.third = 'third'
+    failure!
+  end
+end
+
+class Fourth
+  prepend Cooperator
+
+  def perform
+    context.fourth = 'fourth'
+  end
+end
+
 class Success
   prepend Cooperator
 
   def perform
     cooperate First,
               Second
+  end
+end
+
+class Failure
+  prepend Cooperator
+
+  def perform
+    cooperate First,
+              Second,
+              Third,
+              Fourth
   end
 end
 
@@ -33,3 +61,15 @@ scope 'no failure' do
     assert context.second, :==, 'second'
   end
 end
+
+scope 'has failure' do
+  spec '#cooperate performs the given actions until a failure is met' do
+    context = Failure.perform
+
+    assert context.first, :==, 'first'
+    assert context.second, :==, 'second'
+    assert context.third, :==, 'third'
+    refute context.fourth
+  end
+end
+
