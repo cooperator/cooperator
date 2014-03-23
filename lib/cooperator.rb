@@ -8,6 +8,10 @@ module Cooperator
       self._failure = false
     end
 
+    def failure!
+      self._failure = true
+    end
+
     def success?
       not failure?
     end
