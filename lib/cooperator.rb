@@ -52,6 +52,7 @@ module Cooperator
   private
 
   def success!
+    context.success!
     throw :finish
   end
 end
