@@ -1,9 +1,15 @@
 require "cooperator/version"
 
-require 'hashie'
-
 module Cooperator
-  class Context < Hashie::Mash
+  class Context
+    def initialize(attributes = {})
+      @_attributes = {}
+
+      attributes.each do |k, v|
+        send :"#{k}=", v
+      end
+    end
+
     def success!
       self._failure = false
     end
@@ -19,10 +25,22 @@ module Cooperator
     def failure?
       _failure
     end
+
+    def method_missing(method, *args, &block)
+      method = String method
+
+      if method.include? '='
+        method.gsub!(/=/, '')
+
+        @_attributes[:"#{method}"] = args.shift
+      else
+        @_attributes[:"#{method}"]
+      end
+    end
   end
 
   module ClassMethods
-    def perform(context = nil)
+    def perform(context = {})
       action = new context
 
       catch :finish do
