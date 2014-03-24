@@ -1,5 +1,4 @@
-require "cooperator/version"
-
+require 'cooperator/version'
 require 'cooperator/context'
 
 module Cooperator
