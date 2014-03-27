@@ -1,6 +1,6 @@
 # Cooperator
 
-TODO: Write a gem description
+Simple cooperative interactors for Ruby
 
 ## Installation
 
