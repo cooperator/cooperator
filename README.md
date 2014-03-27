@@ -2,6 +2,11 @@
 
 Simple cooperative interactors for Ruby
 
+Inspired by the following:
+
+* [LightService](https://github.com/adomokos/light-service) by [Atilla Domokos](https://github.com/adomokos)
+* [Interactor](https://github.com/collectiveidea/interactor) from [Collective Idea](https://github.com/collectiveidea)
+
 ## Installation
 
 Add this line to your application's Gemfile:
