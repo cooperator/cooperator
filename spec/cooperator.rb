@@ -17,3 +17,16 @@ spec '#success? delegates to context.success?' do
 
   refute interactor, :success?
 end
+
+spec '#failure? delegates to context.failure?' do
+  interactor = Interactor.new
+
+  interactor.context.failure!
+
+  assert interactor, :failure?
+
+  interactor.context.success!
+
+  refute interactor, :failure?
+end
+
