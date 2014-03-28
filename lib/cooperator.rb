@@ -57,4 +57,12 @@ module Cooperator
   def failure?
     context.failure?
   end
+
+  def method_missing(method, *args, &block)
+    if context.respond_to? method
+      return context.send method, *args, &block
+    end
+
+    super
+  end
 end

@@ -30,3 +30,8 @@ spec '#failure? delegates to context.failure?' do
   refute interactor, :failure?
 end
 
+spec 'delegate to the current context' do
+  interactor = Interactor.new name: 'Apple'
+
+  assert interactor.name, :==, 'Apple'
+end

@@ -35,5 +35,9 @@ module Cooperator
         @_attributes[:"#{method}"]
       end
     end
+
+    def respond_to_missing?(method, private = false)
+      @_attributes.include?(method) || super
+    end
   end
 end
