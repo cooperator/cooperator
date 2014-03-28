@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Cooperator::VERSION
   spec.authors       = ['Erol Fornoles']
   spec.email         = ['erol.fornoles@gmail.com']
-  spec.summary       = %q{Simple cooperative interactions}
-  spec.description   = %q{Simple cooperative interactions}
+  spec.summary       = %q{Simple cooperative interactors}
+  spec.description   = %q{Simple cooperative interactors}
   spec.homepage      = ''
   spec.license       = 'MIT'
 
