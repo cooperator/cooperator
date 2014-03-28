@@ -6,7 +6,7 @@ module Cooperator
     def perform(context = {})
       action = new context
 
-      catch :finish do
+      catch :_finish do
         action.perform
       end
 
@@ -42,7 +42,7 @@ module Cooperator
 
   def success!
     context.success!
-    throw :finish
+    throw :_finish
   end
 
   def success?
@@ -51,7 +51,7 @@ module Cooperator
 
   def failure!
     context.failure!
-    throw :finish
+    throw :_finish
   end
 
   def failure?
