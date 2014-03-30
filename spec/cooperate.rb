@@ -71,7 +71,7 @@ scope 'has failure' do
     assert context.first, :==, 'first'
     assert context.second, :==, 'second'
     assert context.third, :==, 'third'
-    refute context.fourth
+    refute context, :include?, :fourth
   end
 end
 

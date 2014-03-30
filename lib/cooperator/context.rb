@@ -1,7 +1,7 @@
 module Cooperator
   class Context
     def initialize(attributes = {})
-      @_attributes = {}
+      @_attributes = {_failure: false}
 
       attributes.each do |k, v|
         send :"#{k}=", v
@@ -29,14 +29,16 @@ module Cooperator
     end
 
     def method_missing(method, *args, &block)
-      method = String method
+      return @_attributes.fetch method if @_attributes.include? method
 
-      if method.include? '='
-        method.gsub!(/=/, '')
+      name = String method
 
-        @_attributes[:"#{method}"] = args.shift
+      if name.include? '='
+        name.gsub!(/=/, '')
+
+        @_attributes[:"#{name}"] = args.shift
       else
-        @_attributes[:"#{method}"]
+        super
       end
     end
 
