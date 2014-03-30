@@ -30,3 +30,9 @@ spec '#failure! marks the context as a failure' do
   assert context, :failure?
   refute context, :success?
 end
+
+spec '#include? returns true for an existing attribute' do
+  context = Cooperator::Context.new name: 'Apple'
+
+  assert context, :include?, :name
+end

@@ -24,6 +24,10 @@ module Cooperator
       _failure
     end
 
+    def include?(key)
+      @_attributes.include? key
+    end
+
     def method_missing(method, *args, &block)
       method = String method
 
