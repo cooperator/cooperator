@@ -36,3 +36,10 @@ spec '#include? returns true for an existing attribute' do
 
   assert context, :include?, :name
 end
+
+spec '#include? returns false for a non-existing attribute' do
+  context = Cooperator::Context.new
+
+  refute context, :include?, :name
+end
+
