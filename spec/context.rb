@@ -42,4 +42,3 @@ spec '#include? returns false for a non-existing attribute' do
 
   refute context, :include?, :name
 end
-
