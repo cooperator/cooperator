@@ -30,6 +30,16 @@ spec '#failure? delegates to context.failure?' do
   refute interactor, :failure?
 end
 
+spec '#include? delegates to context.include?' do
+  interactor = Interactor.new
+
+  refute interactor, :include?, :name
+
+  interactor.context.name = 'Apple'
+
+  assert interactor, :include?, :name
+end
+
 spec 'delegate to the current context' do
   interactor = Interactor.new name: 'Apple'
 
