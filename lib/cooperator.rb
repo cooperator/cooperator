@@ -51,9 +51,7 @@ module Cooperator
   end
 
   def method_missing(method, *args, &block)
-    if context.respond_to? method
-      return context.send method, *args, &block
-    end
+    return context.send method, *args, &block if context.respond_to? method
 
     super
   end
