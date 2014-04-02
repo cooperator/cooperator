@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/Erol/cooperator.png)](https://codeclimate.com/github/Erol/cooperator)
+
 # Cooperator
 
 Simple cooperative interactors for Ruby
