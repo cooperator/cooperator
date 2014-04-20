@@ -8,6 +8,10 @@ module Cooperator
       end
     end
 
+    def errors
+      @_errors ||= []
+    end
+
     def success!
       self._failure = false
     end
