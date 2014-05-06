@@ -15,6 +15,12 @@ spec '.new accepts a hash' do
   assert context.name, :==, 'Apple'
 end
 
+spec '#errors is an array' do
+  context = Cooperator::Context.new
+  
+  assert context.errors, :is_a?, Array
+end
+
 spec '#success! marks the context as a success' do
   context = Cooperator::Context.new
   context.success!
@@ -29,6 +35,13 @@ spec '#failure! marks the context as a failure' do
 
   assert context, :failure?
   refute context, :success?
+end
+
+spec '#failure! accepts an error message' do
+  context = Cooperator::Context.new
+  context.failure! 'Failure!'
+
+  assert context.errors, :include?, 'Failure!'
 end
 
 spec '#include? returns true for an existing attribute' do

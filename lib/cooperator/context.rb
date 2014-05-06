@@ -8,11 +8,19 @@ module Cooperator
       end
     end
 
+    def errors
+      @_errors ||= []
+    end
+
     def success!
       self._failure = false
     end
 
-    def failure!
+    def failure!(*args)
+      args.each do |error|
+        errors.push error
+      end
+
       self._failure = true
     end
 
