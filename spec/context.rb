@@ -15,10 +15,10 @@ spec '.new accepts a hash' do
   assert context.name, :==, 'Apple'
 end
 
-spec '#errors is an array' do
+spec '#errors is a hash of error messages' do
   context = Cooperator::Context.new
   
-  assert context.errors, :is_a?, Array
+  assert context.errors, :is_a?, Hash
 end
 
 spec '#success! marks the context as a success' do

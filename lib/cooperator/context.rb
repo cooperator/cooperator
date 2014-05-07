@@ -9,16 +9,16 @@ module Cooperator
     end
 
     def errors
-      @_errors ||= []
+      @_errors ||= Hash.new { |h, k| h[k] = [] }
     end
 
     def success!
       self._failure = false
     end
 
-    def failure!(*args)
-      args.each do |error|
-        errors.push error
+    def failure!(messages = {})
+      messages.each do |key, message|
+        errors[key].push message
       end
 
       self._failure = true
