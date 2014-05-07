@@ -37,11 +37,11 @@ spec '#failure! marks the context as a failure' do
   refute context, :success?
 end
 
-spec '#failure! accepts an error message' do
+spec '#failure! accepts an error key and message' do
   context = Cooperator::Context.new
-  context.failure! 'Failure!'
+  context.failure! action: 'Failure!'
 
-  assert context.errors, :include?, 'Failure!'
+  assert context.errors, :==, action: ['Failure!']
 end
 
 spec '#include? returns true for an existing attribute' do
