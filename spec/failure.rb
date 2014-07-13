@@ -10,6 +10,14 @@ class Failure
   end
 end
 
+class FailureWithErrors
+  prepend Cooperator
+
+  def perform
+    failure! action: 'Failure!'
+  end
+end
+
 prepare do
   $before = false
   $after = false
@@ -29,4 +37,10 @@ spec '.perform returns a failure context' do
 
   assert context, :failure?
   refute context, :success?
+end
+
+spec '.perform returns a failure with errors context' do
+  context = FailureWithErrors.perform
+
+  assert context.errors, :==, action: ['Failure!']
 end
