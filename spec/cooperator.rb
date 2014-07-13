@@ -45,12 +45,3 @@ spec 'delegate to the current context' do
 
   assert interactor.name, :==, 'Apple'
 end
-
-spec '#failure! accepts an error key and message' do
-  context = Cooperator::Context.new
-  interactor = Interactor.new context
-
-  interactor.failure! action: 'Failure!'
-
-  assert context.errors, :==, action: ['Failure!']
-end
