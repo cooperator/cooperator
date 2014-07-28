@@ -1,4 +1,3 @@
-[![Code Climate](https://codeclimate.com/github/Erol/cooperator.png)](https://codeclimate.com/github/Erol/cooperator)
 [![Code Climate Score](http://img.shields.io/codeclimate/github/Erol/cooperator.svg?style=flat)](https://codeclimate.com/github/Erol/cooperator)
 
 # Cooperator
