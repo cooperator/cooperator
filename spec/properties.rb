@@ -17,7 +17,7 @@ class Interactor
 end
 
 scope '.expects' do
-  spec 'adds given properties to context requirements' do
+  spec 'adds given properties as expected/required input' do
     assert Interactor.expected, :include?, :apple
     assert Interactor.expected, :include?, :banana
   end
