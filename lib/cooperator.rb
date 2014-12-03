@@ -9,6 +9,10 @@ module Cooperator
 
     def needs(*properties)
       properties.each do |property|
+        define_method property do
+          context.send property
+        end
+
         requirements << property
       end
     end

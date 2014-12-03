@@ -16,4 +16,11 @@ scope '.needs' do
     assert Interactor.requirements, :include?, :apple
     assert Interactor.requirements, :include?, :banana
   end
+
+  spec 'delegate given properties to the current context' do
+    interactor = Interactor.new apple: 'Apple', banana: 'Banana'
+
+    assert interactor.apple, :==, 'Apple'
+    assert interactor.banana, :==, 'Banana'
+  end
 end
