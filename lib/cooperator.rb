@@ -18,6 +18,11 @@ module Cooperator
     end
 
     def wants(*properties)
+      properties.each do |property|
+        define_method property do
+          context.send property
+        end
+      end
     end
 
     def perform(context = {})

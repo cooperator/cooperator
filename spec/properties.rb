@@ -33,4 +33,11 @@ scope '.wants' do
     refute Interactor.requirements, :include?, :coconut
     refute Interactor.requirements, :include?, :durian
   end
+
+  spec 'delegate given properties to the current context' do
+    interactor = Interactor.new coconut: 'Coconut', durian: 'Durian'
+
+    assert interactor.coconut, :==, 'Coconut'
+    assert interactor.durian, :==, 'Durian'
+  end
 end
