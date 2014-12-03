@@ -49,10 +49,4 @@ module Cooperator
     context.failure! messages
     throw :_finish
   end
-
-  def method_missing(method, *args, &block)
-    return context.send method, *args, &block if context.respond_to? method
-
-    super
-  end
 end
