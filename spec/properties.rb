@@ -40,4 +40,11 @@ scope '.wants' do
     assert interactor.coconut, :==, 'Coconut'
     assert interactor.durian, :==, 'Durian'
   end
+
+  spec 'return nil for properties not included in the current context' do
+    interactor = Interactor.new
+
+    assert interactor.coconut, :==, nil
+    assert interactor.durian, :==, nil
+  end
 end

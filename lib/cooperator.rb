@@ -20,7 +20,11 @@ module Cooperator
     def wants(*properties)
       properties.each do |property|
         define_method property do
-          context.send property
+          if context.include? property
+            context.send property
+          else
+            nil
+          end
         end
       end
     end
