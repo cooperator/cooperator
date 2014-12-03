@@ -6,6 +6,8 @@ class Interactor
   needs :apple, :banana
   wants :coconut, :durian
 
+  gives :fig
+
   def perform
     value = apple
     value = banana

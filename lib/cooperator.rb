@@ -29,6 +29,10 @@ module Cooperator
       end
     end
 
+    def gives(*properties)
+      # TODO: Do something
+    end
+
     def perform(context = {})
       action = new context
 
