@@ -57,4 +57,8 @@ module Cooperator
   def failure?
     context.failure?
   end
+
+  def include?(property)
+    context.include?(property)
+  end
 end
