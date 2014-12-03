@@ -31,9 +31,9 @@ scope '.expects' do
 end
 
 scope '.accepts' do
-  spec 'does not add given properties to context requirements' do
-    refute Interactor.expected, :include?, :coconut
-    refute Interactor.expected, :include?, :durian
+  spec 'adds given properties as accepted/optional input' do
+    assert Interactor.accepted, :include?, :coconut
+    assert Interactor.accepted, :include?, :durian
   end
 
   spec 'delegate given properties to the current context' do

@@ -7,6 +7,10 @@ module Cooperator
       @_expected ||= []
     end
 
+    def accepted
+      @_accepted ||= []
+    end
+
     def committed
       @_committed ||= []
     end
@@ -30,6 +34,8 @@ module Cooperator
             nil
           end
         end
+
+        accepted << property
       end
     end
 
