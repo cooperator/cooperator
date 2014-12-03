@@ -17,7 +17,7 @@ module Cooperator
       end
     end
 
-    def wants(*properties)
+    def accepts(*properties)
       properties.each do |property|
         define_method property do
           if context.include? property

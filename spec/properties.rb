@@ -4,7 +4,7 @@ class Interactor
   prepend Cooperator
 
   expects :apple, :banana
-  wants :coconut, :durian
+  accepts :coconut, :durian
 
   gives :fig
 
@@ -30,7 +30,7 @@ scope '.expects' do
   end
 end
 
-scope '.wants' do
+scope '.accepts' do
   spec 'does not add given properties to context requirements' do
     refute Interactor.expected, :include?, :coconut
     refute Interactor.expected, :include?, :durian
