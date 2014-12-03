@@ -17,6 +17,9 @@ module Cooperator
       end
     end
 
+    def wants(*properties)
+    end
+
     def perform(context = {})
       action = new context
 
