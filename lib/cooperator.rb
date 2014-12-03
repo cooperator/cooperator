@@ -46,6 +46,10 @@ module Cooperator
     end
 
     def perform(context = {})
+      expected.each do |property|
+        raise Exception, "missing expected property: #{expect}" unless context.include? expect
+      end
+
       action = new context
 
       catch :_finish do
