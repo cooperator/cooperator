@@ -6,7 +6,7 @@ class Interactor
   expects :apple, :banana
   accepts :coconut, :durian
 
-  gives :fig
+  commits :fig
 
   def perform
     value = apple
@@ -48,5 +48,11 @@ scope '.accepts' do
 
     assert interactor.coconut, :==, nil
     assert interactor.durian, :==, nil
+  end
+end
+
+scope '.commits' do
+  spec 'adds given properties as committed/required output' do
+    assert Interactor.committed, :include?, :fig
   end
 end

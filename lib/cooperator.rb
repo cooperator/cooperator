@@ -7,6 +7,10 @@ module Cooperator
       @_expected ||= []
     end
 
+    def committed
+      @_committed ||= []
+    end
+
     def expects(*properties)
       properties.each do |property|
         define_method property do
@@ -29,8 +33,10 @@ module Cooperator
       end
     end
 
-    def gives(*properties)
-      # TODO: Do something
+    def commits(*properties)
+      properties.each do |property|
+        committed << property
+      end
     end
 
     def perform(context = {})
