@@ -53,4 +53,8 @@ module Cooperator
     context.failure! messages
     throw :_finish
   end
+
+  def failure?
+    context.failure?
+  end
 end
