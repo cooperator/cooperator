@@ -3,6 +3,16 @@ require 'cooperator/context'
 
 module Cooperator
   module ClassMethods
+    def requirements
+      @_requirements ||= []
+    end
+
+    def needs(*properties)
+      properties.each do |property|
+        requirements << property
+      end
+    end
+
     def perform(context = {})
       action = new context
 
