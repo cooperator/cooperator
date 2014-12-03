@@ -56,6 +56,10 @@ module Cooperator
         action.perform
       end
 
+      committed.each do |property|
+        raise Exception, "missing committed property: #{expect}" unless context.include? expect
+      end
+
       action.context
     end
   end
