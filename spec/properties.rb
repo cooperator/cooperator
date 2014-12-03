@@ -3,7 +3,7 @@ require 'cooperator'
 class Interactor
   prepend Cooperator
 
-  needs :apple, :banana
+  expects :apple, :banana
   wants :coconut, :durian
 
   gives :fig
@@ -16,10 +16,10 @@ class Interactor
   end
 end
 
-scope '.needs' do
+scope '.expects' do
   spec 'adds given properties to context requirements' do
-    assert Interactor.requirements, :include?, :apple
-    assert Interactor.requirements, :include?, :banana
+    assert Interactor.expected, :include?, :apple
+    assert Interactor.expected, :include?, :banana
   end
 
   spec 'delegate given properties to the current context' do
@@ -32,8 +32,8 @@ end
 
 scope '.wants' do
   spec 'does not add given properties to context requirements' do
-    refute Interactor.requirements, :include?, :coconut
-    refute Interactor.requirements, :include?, :durian
+    refute Interactor.expected, :include?, :coconut
+    refute Interactor.expected, :include?, :durian
   end
 
   spec 'delegate given properties to the current context' do

@@ -3,17 +3,17 @@ require 'cooperator/context'
 
 module Cooperator
   module ClassMethods
-    def requirements
-      @_requirements ||= []
+    def expected
+      @_expected ||= []
     end
 
-    def needs(*properties)
+    def expects(*properties)
       properties.each do |property|
         define_method property do
           context.send property
         end
 
-        requirements << property
+        expected << property
       end
     end
 
