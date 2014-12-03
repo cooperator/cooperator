@@ -45,6 +45,10 @@ module Cooperator
     throw :_finish
   end
 
+  def success?
+    context.success?
+  end
+
   def failure!(messages = {})
     context.failure! messages
     throw :_finish
