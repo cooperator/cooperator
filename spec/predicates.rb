@@ -39,9 +39,3 @@ spec '#include? delegates to context.include?' do
 
   assert interactor, :include?, :name
 end
-
-spec 'delegate to the current context' do
-  interactor = Interactor.new name: 'Apple'
-
-  assert interactor.name, :==, 'Apple'
-end
