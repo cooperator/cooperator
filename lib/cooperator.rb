@@ -62,6 +62,14 @@ module Cooperator
 
       action.context
     end
+
+    def rollback(context = {})
+      action = new context
+
+      action.rollback if action.respond_to? :rollback
+
+      action.context
+    end
   end
 
   def context
@@ -77,10 +85,20 @@ module Cooperator
   end
 
   def cooperate(*actions)
+    done = []
+
     actions.each do |action|
       action.perform context
 
       break if context.failure?
+
+      done << action
+    end
+
+    if context.failure?
+      done.reverse.each do |action|
+        action.rollback context
+      end
     end
   end
 
