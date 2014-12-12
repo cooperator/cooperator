@@ -102,6 +102,12 @@ module Cooperator
     end
   end
 
+  def commit(properties = {})
+    properties.each do |key, value|
+      context.send :"#{key}=", value
+    end
+  end
+
   def self.prepended(base)
     base.extend ClassMethods
   end
