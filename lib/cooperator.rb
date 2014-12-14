@@ -57,7 +57,7 @@ module Cooperator
       end
 
       committed.each do |property|
-        raise Exception, "missing committed property: #{expect}" unless context.include? expect
+        raise Exception, "missing committed property: #{property}" unless context.include? property
       end
 
       action.context
