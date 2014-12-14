@@ -47,7 +47,7 @@ module Cooperator
 
     def perform(context = {})
       expected.each do |property|
-        raise Exception, "missing expected property: #{expect}" unless context.include? expect
+        raise Exception, "missing expected property: #{property}" unless context.include? property
       end
 
       action = new context
