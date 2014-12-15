@@ -56,8 +56,10 @@ module Cooperator
         action.perform
       end
 
-      committed.each do |property|
-        raise Exception, "missing committed property: #{property}" unless action.context.include? property
+      unless action.context.failure?
+        committed.each do |property|
+          raise Exception, "missing committed property: #{property}" unless action.context.include? property
+        end
       end
 
       action.context

@@ -28,6 +28,16 @@ class CommitsWithCommit
   end
 end
 
+class CommitsWithoutCommitButFailure
+  prepend Cooperator
+
+  commits :output
+
+  def perform
+    failure!
+  end
+end
+
 scope '.perform' do
   spec 'raises an exception when an expected input is missing' do
     raises Exception do
@@ -47,5 +57,9 @@ scope '.perform' do
 
   spec 'runs when a committed output exists' do
     CommitsWithCommit.perform
+  end
+
+  spec 'finishes when a committed output is missing but the action raised a failure' do
+    CommitsWithoutCommitButFailure.perform
   end
 end
