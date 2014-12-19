@@ -4,6 +4,8 @@
 
 Simple cooperative interactors for Ruby
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Erol/cooperator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 Inspired by the following:
 
 * [LightService](https://github.com/adomokos/light-service) by [Atilla Domokos](https://github.com/adomokos)
