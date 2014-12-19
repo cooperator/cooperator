@@ -2,6 +2,8 @@
 
 # Cooperator
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Erol/cooperator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Simple cooperative interactors for Ruby
 
 Inspired by the following:
