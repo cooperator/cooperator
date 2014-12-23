@@ -51,7 +51,10 @@ module Cooperator
     end
 
     def respond_to_missing?(method, private = false)
-      @_attributes.include?(method) || super
+      name = String method
+      name.gsub!(/=/, '') if name.include? '='
+
+      @_attributes.include?(:"#{name}") || super
     end
   end
 end
