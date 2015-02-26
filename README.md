@@ -31,32 +31,32 @@ Cooperators are simple cooperative interactors for Ruby. Inspired by the [Intera
 ### Context
 A cooperator’s context consists of properties known to it at a given time. It can be passed by the calling method:
 
-  context = CalculateCost.perform(amount: amount, quantity: quantity)
+    context = CalculateCost.perform(amount: amount, quantity: quantity)
   
 You can then access the passed paramerters as part of the cooperator's context.
 
-  class CalculateCost
-    prepend Cooperator
-    
-    def perform
-      puts context.amount * context.quantity
+    class CalculateCost
+      prepend Cooperator
+      
+      def perform
+        puts context.amount * context.quantity
+      end
     end
-  end
 
 Additional properties can also be added to the context during execution:
 
-  class CalculateCost
-    prepend Cooperator
-    
-    def perform
-      context.total = context.amount * context.quantity
+    class CalculateCost
+      prepend Cooperator
+      
+      def perform
+        context.total = context.amount * context.quantity
+      end
     end
-  end
   
 The added properties can then be accessed as part of the context even after execution.
 
-  context = CalculateCost.perform(amount: amount, quantity: quantity)
-  puts context.total
+    context = CalculateCost.perform(amount: amount, quantity: quantity)
+    puts context.total
 
 
 ### Success and Failure of Context
@@ -64,60 +64,60 @@ The added properties can then be accessed as part of the context even after exec
 #### Success!
 Success is reached when the cooperator finishes execution without having raised failures.
 
-  def perform
-    context.interest = context.amount * 0.02
-  end
+    def perform
+      context.interest = context.amount * 0.02
+    end
 
 Success can also be explicitly reached by calling ```success!```
 
-  def perform
-    context.total = context.amount * context.quantity
-    success!
-    puts ‘Won’t be printed anymore.’
-  end
+    def perform
+      context.total = context.amount * context.quantity
+      success!
+      puts ‘Won’t be printed anymore.’
+    end
   
 ```success!``` returns immediately to the calling method, ignoring the succeeding lines in the cooperator. To explicitly reach success and still continue execution, use ```context.success!```.
 
 
-  def perform
-    context.total = context.amount * context.quantity
-    context.success!
-    puts ‘Will still be printed.’
-  end
+    def perform
+      context.total = context.amount * context.quantity
+      context.success!
+      puts ‘Will still be printed.’
+    end
 
 
 #### Failure!
 To raise failure at any given point and stop further execution, call ```failure!```
 
-  def perform
-    if context.quantity < 0
-      failure!
-      puts “Won’t be printed anymore”
+    def perform
+      if context.quantity < 0
+        failure!
+        puts “Won’t be printed anymore”
+      end
     end
-  end
 
 On the other hand, calling ```context.failure!``` would raise failure but would still continue further execution of the cooperator.
 
-  def perform
-    if context.quantity < 0
-      context.failure!
-      puts “Will still be printed”
+    def perform
+      if context.quantity < 0
+        context.failure!
+        puts “Will still be printed”
+      end
     end
-  end
 
 To check whether the cooperator have succeeded or failed, use ```success?``` or ```failure?```.
 
 In the ```perform``` method of cooperator CalculateCost:
 
-  def perform
-    success!
-  end
+    def perform
+      success!
+    end
 
 In the call to cooperator:
 
-  context = CalculateCost.perfom(amount: amount, quantity: quantity)
-  context.success? #true
-  context.failure? #false
+    context = CalculateCost.perfom(amount: amount, quantity: quantity)
+    context.success? #true
+    context.failure? #false
 
 
 ### Expects, Accepts, Commits
@@ -130,18 +130,18 @@ To organize and validate the presence of these parameters and return values, coo
 
 Designates a given property as expected/required input
 
-  class CalculateTotal
-    prepend Cooperator
+    class CalculateTotal
+      prepend Cooperator
+      
+      expects :cost, :quantity
     
-    expects :cost, :quantity
-  
-    def perform
+      def perform
+      end
     end
-  end
 
 In calling the cooperator, supply the expected properties of the context:
   
-  CalculateTotal.perform(cost: cost, quantity: quantity)
+    CalculateTotal.perform(cost: cost, quantity: quantity)
 
 Otherwise, an exception is raised if an expected input is not satisfied.
 
@@ -149,44 +149,44 @@ Otherwise, an exception is raised if an expected input is not satisfied.
 
 Designates a given property as accepted but not required (optional) input
 
-   accepts :discount
+    accepts :discount
 
 #### Commits
 
 Designates a given property as a commited/required output
 
-  commits :total
+    commits :total
 
 Once execution has finished, if the committed output was not set, an exception is raised. Calling ```failure!``` and ```context.failure!``` would terminate execution, whether or not the committed output was set. Upon failure, no exception due to missing committed output is raised.
 
 #### Expected, Accepted, Committed
 Designated expected, accepted, committed properties can be accessed through the ```expected```,  ```accepted```, and ```committed``` property.
 
-  class CalculateTotal
-    prepend Cooperator
-  
-    expects :amount, :quantity
-    accepts :discount
-  
-    commits :total
-  
-    def perform
-      context.total = ()context.amount * context.quantity)
-      context.total -= (context.discount || 0)
+    class CalculateTotal
+      prepend Cooperator
+    
+      expects :amount, :quantity
+      accepts :discount
+    
+      commits :total
+    
+      def perform
+        context.total = ()context.amount * context.quantity)
+        context.total -= (context.discount || 0)
+      end
     end
-  end
   
-  CalculateTotal.expected
-  # [:amount, :quantity]
-  
-  CalculateTotal.accepted
-  #  [:discount]
-  
-  CalculateTotal.committed
-  # [:total]
+    CalculateTotal.expected
+    # [:amount, :quantity]
+    
+    CalculateTotal.accepted
+    #  [:discount]
+    
+    CalculateTotal.committed
+    # [:total]
 
-  CalculateTotal.expected.include? :discount
-  # false
+    CalculateTotal.expected.include? :discount
+    # false
 
 ### Cooperate
  Cooperate stuff here.
