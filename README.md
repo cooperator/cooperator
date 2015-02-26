@@ -9,6 +9,13 @@ Inspired by the following:
 * [LightService](https://github.com/adomokos/light-service) by [Atilla Domokos](https://github.com/adomokos)
 * [Interactor](https://github.com/collectiveidea/interactor) from [Collective Idea](https://github.com/collectiveidea)
 
+Cooperator
+
+Cooperators are simple cooperative interactors for Ruby. Inspired by the Interactor by _______, a cooperator is an object that does a single atomic task. Lightweight and simple, the most common tools are always handy.
+
+* sample of a cooperator here * 
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
