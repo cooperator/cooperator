@@ -174,16 +174,59 @@ In the call to the cooperator:
     context.failure? #false
 
 
+
+
 ### Cooperate
- Cooperate stuff here.
+
+One single task can be broken down into smaller subtasks. Several subtasks might need to be executed in chain, passing resulting values from one subtask to the next. Execution of succeeding subtasks might also depend on the successes of the previous. For these matters, Cooperator provides ```cooperate``` that accepts a list of cooperators that will be executed in sequence.
+
+```cooperate``` passes its context to the cooperators it executes with the cooperators being able to change context properties along the way.
+ 
+  class CalculateTotal
+    prepend Cooperator
+    
+    def perform
+    
+      cooperate CalculateSubtotal,
+            ApplyDiscount
+    end
+  end
+ 
+ A failure in one cooperator passed to ```cooperate``` would stop execution of the chain, and thus succeeding cooperators would not be executed.
+ 
+In ```CalculateSubtotal```:
+
+  class CalculateSubtotal
+    prepend Cooperator
+
+    def perform
+      puts "Will be printed"
+      failure!
+    end 
+  end
+
+In ```ApplyDiscount```:
+
+  class ApplyDiscount
+    prepend Cooperator
+    def perform
+      puts "Won't be printed"
+    end
+  end
 
 
 ### Rollback
- Rollback stuff here
-
+ 
+ During the course of execution of tasks in chain, several changes may have already been persisted (in the data store, object's state, etc), and most of the time, we want these changes undone if failure was raised somewhere during execution. We want to go back to the initial state, as if the action was not called.
+  
+ For this purpose, Cooperator provides ```rollback```.  On ```failure!```, all the rollback methods of the preceding cooperators in the ```cooperate``` chain will be called in reverse sequence.
+ 
+ Sample here.
 
 ### Defaults
  Defaults stuff here
+
+
 
 ## Contributing
 
