@@ -60,7 +60,7 @@ The added properties can also be accessed as part of the context even after exec
 
 ### Expects, Accepts, Commits
 
-Several context properties may be optional or required for the execution of the cooperator. The cooperator, in return may be expected too of a return value. To organize and validate their presence, Cooperator provides the ```expects```, ```accepts```, and ```commits``` directives.
+Several context properties may be optional or required for the execution of the cooperator. The cooperator, in return, may be expected too of a return value. To organize and validate their presence, Cooperator provides the ```expects```, ```accepts```, and ```commits``` directives.
 
 #### Expects
 
@@ -93,7 +93,7 @@ Designates a given property as a commited/required output
 
     commits :total
 
-Once execution has finished, if the committed output was not set, an exception is raised. Calling ```failure!```  would terminate execution, whether or not the committed output was set. Upon ```failure!```, no exception due to missing committed output is raised.
+Once execution has finished, if the committed output was not set, an exception is raised. Calling ```failure!```  would terminate execution, whether or not the committed output was set. Upon ```failure!```, no exception due to missing committed output will be raised.
 
 #### Expected, Accepted, Committed
 Designated expected, accepted, committed properties can be accessed through the ```expected```,  ```accepted```, and ```committed``` property.
@@ -133,7 +133,7 @@ Designated expected, accepted, committed properties can be accessed through the 
 ### Success and Failure of Context
 
 #### Success!
-Success is reached when the cooperator finishes execution without having raised failures.
+Success is reached when the cooperator finishes execution without having any failures raised.
 
     def perform
       context.interest = context.amount * 0.02
@@ -159,9 +159,9 @@ To raise failure at any given point and stop further execution, call ```failure!
       end
     end
 
-To check whether the cooperator have succeeded or failed, use ```success?``` or ```failure?```.
+To check whether the cooperator have succeeded or failed, you can use ```success?``` or ```failure?```.
 
-In the ```perform``` method of cooperator CalculateCost:
+In ```CalculateCost#perform```:
 
     def perform
       success!
@@ -170,8 +170,8 @@ In the ```perform``` method of cooperator CalculateCost:
 In the call to the cooperator:
 
     context = CalculateCost.perfom(amount: amount, quantity: quantity)
-    context.success? #true
-    context.failure? #false
+    context.success? # true
+    context.failure? # false
 
 
 
@@ -182,38 +182,39 @@ One single task can be broken down into smaller subtasks. Several subtasks might
 
 ```cooperate``` passes its context to the cooperators it executes with the cooperators being able to change context properties along the way.
  
-  class CalculateTotal
-    prepend Cooperator
+ 	class CalculateTotal
+    	prepend Cooperator
     
-    def perform
-    
-      cooperate CalculateSubtotal,
-            ApplyDiscount
-    end
-  end
+	    def perform
+	      cooperate CalculateSubtotal,
+	                ApplyDiscount
+	    end
+	end
  
  A failure in one cooperator passed to ```cooperate``` would stop execution of the chain, and thus succeeding cooperators would not be executed.
  
 In ```CalculateSubtotal```:
 
-  class CalculateSubtotal
-    prepend Cooperator
+	class CalculateSubtotal
+    	prepend Cooperator
 
-    def perform
-      puts "Will be printed"
-      failure!
-    end 
-  end
+    	def perform
+      		puts "Will be printed"
+      		failure!
+    	end
+    end
 
 In ```ApplyDiscount```:
 
-  class ApplyDiscount
-    prepend Cooperator
-    def perform
-      puts "Won't be printed"
-    end
-  end
+	class ApplyDiscount
+	  prepend Cooperator
+	  
+	  def perform
+	    puts "Won't be printed"
+	  end
+	end
 
+Calling ```CalculateTotal#perform```, would only output ```"Will be printed"```.
 
 ### Rollback
  
@@ -221,7 +222,64 @@ In ```ApplyDiscount```:
   
  For this purpose, Cooperator provides ```rollback```.  On ```failure!```, all the rollback methods of the preceding cooperators in the ```cooperate``` chain will be called in reverse sequence.
  
- Sample here.
+
+	class ReserveProduct
+		prepend Cooperator
+		
+		expects :product, :user
+		expects :amount, :quantity
+		
+		def perform
+			cooperate	DecreaseStocks,
+						AddPayable
+						SendReservationEmail
+		end
+	end
+	
+	class DecreaseStocks
+		prepend Cooperator
+		
+		expects :product, :quantity
+		
+		def perform
+			product.decrease_stocks! quantity
+		end
+		
+		def rollback
+			product.increase_stocks! quantity
+			puts 'Executing rollback for DecreaseStocks'
+		end
+	end
+	
+	class AddPayable
+		prepend Cooperator
+		
+		expects :user, :amount
+		
+		def perform
+			user.payables.add amount
+		end
+		
+		def rollback
+			user.payables.deduct amount
+			puts 'Executing rollback for AddPayable'
+		end
+	end
+	
+	class SendReservationEmail
+		def perform
+			failure!
+		end
+	end
+	
+Output:
+
+	Executing rollback for AddPayable
+	Executing rollback for DecreaseStocks
+	
+The rollback methods were called in reverse manner of how they are listed under ```cooperate```.
+	
+	
 
 ### Defaults
  Defaults stuff here
