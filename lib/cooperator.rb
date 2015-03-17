@@ -15,39 +15,44 @@ module Cooperator
       @_committed ||= []
     end
 
-    def expects(*properties)
-      properties.each do |property|
-        define_method property do
-          context.send property
-        end
-
-        expected << property
-      end
+    def defaults
+      @_defaults ||= {}
     end
 
-    def accepts(*properties)
-      properties.each do |property|
-        define_method property do
-          if context.include? property
-            context.send property
-          else
-            nil
-          end
-        end
-
-        accepted << property
+    def expects(property)
+      define_method property do
+        context.send property
       end
+
+      expected << property
     end
 
-    def commits(*properties)
-      properties.each do |property|
-        committed << property
+    def accepts(property, default: nil)
+      define_method property do
+        if context.include? property
+          value = context.send property
+          value.is_a?(Proc) ? value.call : value
+        else
+          nil
+        end
       end
+
+      accepted << property
+
+      defaults[property] = default if default
+    end
+
+    def commits(property)
+      committed << property
     end
 
     def perform(context = {})
       expected.each do |property|
         raise Exception, "missing expected property: #{property}" unless context.include? property
+      end
+
+      defaults.each do |property, value|
+        context[property] = value
       end
 
       action = new context
