@@ -42,10 +42,8 @@ module Cooperator
       defaults[property] = default if default
     end
 
-    def commits(*properties)
-      properties.each do |property|
-        committed << property
-      end
+    def commits(property)
+      committed << property
     end
 
     def perform(context = {})
