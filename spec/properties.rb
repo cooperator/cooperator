@@ -3,7 +3,8 @@ require 'cooperator'
 class Interactor
   prepend Cooperator
 
-  expects :apple, :banana
+  expects :apple
+  expects :banana
   accepts :coconut
   accepts :durian
 

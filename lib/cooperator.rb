@@ -19,14 +19,12 @@ module Cooperator
       @_defaults ||= {}
     end
 
-    def expects(*properties)
-      properties.each do |property|
-        define_method property do
-          context.send property
-        end
-
-        expected << property
+    def expects(property)
+      define_method property do
+        context.send property
       end
+
+      expected << property
     end
 
     def accepts(property, default: nil)
