@@ -28,3 +28,9 @@ spec '.accepts allows a default lambda' do
 
   assert $reference, :==, 1
 end
+
+spec 'defaults do not override given properties' do 
+  Action.perform value: 2
+
+  assert $value, :==, 2
+end
