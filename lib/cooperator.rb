@@ -52,7 +52,7 @@ module Cooperator
       end
 
       defaults.each do |property, value|
-        context[property] = value
+        context[property] = value unless context.include? property
       end
 
       action = new context
