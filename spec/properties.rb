@@ -4,7 +4,8 @@ class Interactor
   prepend Cooperator
 
   expects :apple, :banana
-  accepts :coconut, :durian
+  accepts :coconut
+  accepts :durian
 
   commits :fig
 
