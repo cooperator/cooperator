@@ -36,6 +36,10 @@ module Cooperator
       @_attributes.include? key
     end
 
+    def []=(key, value)
+      @_attributes[key] = value
+    end
+
     def [](key)
       @_attributes[key]
     end
