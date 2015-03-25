@@ -30,7 +30,7 @@ module Cooperator
     def accepts(property, default: nil)
       define_method property do
         if context.include? property
-          value = context.send property
+          value = context[property]
           value.is_a?(Proc) ? value.call : value
         else
           nil
