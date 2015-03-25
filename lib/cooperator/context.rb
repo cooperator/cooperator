@@ -29,7 +29,7 @@ module Cooperator
     end
 
     def failure?
-      _failure
+      self[:_failure]
     end
 
     def include?(key)
