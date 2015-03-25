@@ -13,7 +13,7 @@ module Cooperator
     end
 
     def success!
-      self._failure = false
+      self[:_failure] = false
     end
 
     def failure!(messages = {})
