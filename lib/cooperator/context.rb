@@ -45,11 +45,18 @@ module Cooperator
     end
 
     def method_missing(method, *args, &block)
-      return @_attributes.fetch method if @_attributes.include? method
+      if @_attributes.include? method
+        puts Kernel.caller.first
+        warn '[DEPRECATED] Cooperator::Context: Use hash-style accessors instead of methods.'
+
+        return @_attributes.fetch method
+      end
 
       name = String method
 
       if name.include? '='
+        warn '[DEPRECATED] Cooperator::Context: Use hash-style accessors instead of methods.'
+
         name.gsub!(/=/, '')
 
         @_attributes[:"#{name}"] = args.shift
