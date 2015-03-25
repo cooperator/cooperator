@@ -4,7 +4,7 @@ module Cooperator
       @_attributes = {_failure: false}
 
       attributes.each do |k, v|
-        send :"#{k}=", v
+        self[k] = v
       end
     end
 
