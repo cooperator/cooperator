@@ -21,7 +21,7 @@ module Cooperator
 
     def expects(property)
       define_method property do
-        context.send property
+        context[property]
       end
 
       expected << property
@@ -30,7 +30,7 @@ module Cooperator
     def accepts(property, default: nil)
       define_method property do
         if context.include? property
-          value = context.send property
+          value = context[property]
           value.is_a?(Proc) ? value.call : value
         else
           nil
@@ -111,7 +111,7 @@ module Cooperator
 
   def commit(properties = {})
     properties.each do |key, value|
-      context.send :"#{key}=", value
+      context[key] = value
     end
   end
 

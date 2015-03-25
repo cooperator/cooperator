@@ -4,7 +4,7 @@ module Cooperator
       @_attributes = {_failure: false}
 
       attributes.each do |k, v|
-        send :"#{k}=", v
+        self[k] = v
       end
     end
 
@@ -13,7 +13,7 @@ module Cooperator
     end
 
     def success!
-      self._failure = false
+      self[:_failure] = false
     end
 
     def failure!(messages = {})
@@ -21,7 +21,7 @@ module Cooperator
         errors[key].push message
       end
 
-      self._failure = true
+      self[:_failure] = true
     end
 
     def success?
@@ -29,19 +29,34 @@ module Cooperator
     end
 
     def failure?
-      _failure
+      self[:_failure]
     end
 
     def include?(key)
       @_attributes.include? key
     end
 
+    def []=(key, value)
+      @_attributes[key] = value
+    end
+
+    def [](key)
+      @_attributes[key]
+    end
+
     def method_missing(method, *args, &block)
-      return @_attributes.fetch method if @_attributes.include? method
+      if @_attributes.include? method
+        puts Kernel.caller.first
+        warn '[DEPRECATED] Cooperator::Context: Use hash-style accessors instead of methods.'
+
+        return @_attributes.fetch method
+      end
 
       name = String method
 
       if name.include? '='
+        warn '[DEPRECATED] Cooperator::Context: Use hash-style accessors instead of methods.'
+
         name.gsub!(/=/, '')
 
         @_attributes[:"#{name}"] = args.shift
