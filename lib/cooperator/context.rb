@@ -36,6 +36,10 @@ module Cooperator
       @_attributes.include? key
     end
 
+    def [](key)
+      @_attributes[key]
+    end
+
     def method_missing(method, *args, &block)
       return @_attributes.fetch method if @_attributes.include? method
 
