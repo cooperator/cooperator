@@ -111,7 +111,7 @@ module Cooperator
 
   def commit(properties = {})
     properties.each do |key, value|
-      context.send :"#{key}=", value
+      context[key] = value
     end
   end
 
