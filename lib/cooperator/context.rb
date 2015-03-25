@@ -21,7 +21,7 @@ module Cooperator
         errors[key].push message
       end
 
-      self._failure = true
+      self[:_failure] = true
     end
 
     def success?
