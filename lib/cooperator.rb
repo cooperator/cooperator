@@ -21,7 +21,7 @@ module Cooperator
 
     def expects(property)
       define_method property do
-        context.send property
+        context[property]
       end
 
       expected << property
