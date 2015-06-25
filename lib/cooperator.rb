@@ -119,6 +119,10 @@ module Cooperator
     base.extend ClassMethods
   end
 
+  def self.included(base)
+    base.include ClassMethods
+  end
+
   private
 
   def success!
