@@ -18,7 +18,11 @@ module Cooperator
 
     def failure!(messages = {})
       messages.each do |key, message|
-        errors[key].push message
+        if message.is_a? Array
+          errors[key].push *message
+        else
+          errors[key].push message
+        end
       end
 
       self[:_failure] = true
